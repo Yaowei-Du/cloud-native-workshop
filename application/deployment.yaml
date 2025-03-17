@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        env:
+        - name: TEST_SECRET_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: test-secret
+              key: username
+        - name: TEST_SECRET_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: test-secret
+              key: password              
+         
